@@ -1,0 +1,2084 @@
+#:import Factory kivy.factory.Factory
+
+ScreensManager:
+    WindowChooseRole:
+
+    WindowWelcomeReader:
+    WindowEnterReader:
+    WindowRegistrationReader:
+    WindowMenuReader:
+    WindowPersonalAccountReader:
+    WindowLibraryReader:
+#    WindowFinishedBooksReader:
+#    WindowAddedBooksReader:
+#    WindowLikedBooksReader:
+#    WindowBookReader:
+
+    WindowWelcomeWorker:
+    WindowEnterWorker:
+    WindowRegistrationWorker:
+    WindowMenuWorker:
+    WindowPersonalAccountWorker:
+    WindowIssuanceOfBooksWorker:
+    WindowCollectingOfBooksWorker:
+#    WindowRequestForTakingBookWorker:
+#    WindowRequestForReturnBookWorker:
+
+    WindowExitReader:
+    WindowExitWorker:
+
+
+
+
+<WindowChooseRole>:
+    name: 'choose_role'
+    title: 'Вход'
+    size:root.width, root.height
+
+    BoxLayout:
+        background_color:'#D1BF8D'
+        background_normal: ''
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        orientation: "vertical"
+        adaptive_size: True
+
+        GridLayout:
+            cols:1
+            height:50
+            padding:15,120,10,0
+            Label:
+                text:"[color=000000]Войти как[/color]"
+                markup: True
+                font_size: 20
+        GridLayout:
+            cols:2
+            spacing:20
+            height:70
+            padding:300,0,10,0
+            MDRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Читатель'
+                on_press:
+#                    app.root.transition.direction = 'no_transition'
+                    app.root.current = 'choose_reader'
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+            MDRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Работник'
+                #disabled: True if root.everything() else False
+                on_press:
+#                    app.root.transition.direction = 'no_transition'
+                    app.root.current = 'choose_worker'
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+
+
+
+<WindowWelcomeReader>:
+    name: 'choose_reader'
+    title: 'Вход'
+    separator_color: (192/256,110/256,240/256,1)
+    background_color:'#a910e6'
+    size:root.width, root.height
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb:(238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+        orientation: "vertical"
+        adaptive_size: True
+
+        GridLayout:
+            cols:1
+            height:50
+            padding:15,140,10,0
+            Label:
+                text:"[color=000000]Вы хотите?[/color]"
+                markup: True
+                font_size: 20
+                height:30
+                width:30
+        GridLayout:
+            cols:1
+            rows:2
+            spacing:20
+            height:70
+            padding:320,0,10,0
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '                Войти                 '
+                #disabled: True if root.everything() else False
+                on_press:
+#                    app.root.transition.direction = 'no_transition'
+                    app.root.current = 'reader_enter'
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '  Зарегистрироваться'
+                #disabled: True if root.everything() else False
+                on_press:
+                    app.root.current = 'reader_registration'
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+<WindowEnterReader>:
+    name: 'reader_enter'
+    title: 'Вход'
+    size:root.width, root.height
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+        orientation: "vertical"
+        adaptive_size: True
+        GridLayout:
+            cols:1
+            height:50
+            padding:30,140,10,0
+            Label:
+                text:"[color=000000]Добро пожаловать![/color]"
+                markup: True
+                font_size: 20
+
+        GridLayout:
+            cols:1
+            rows:1
+            height:30
+            padding:310,40,0,0
+        # имя пациента
+            MyField
+                id: login_reader
+                hint_text: 'Номер чит-го билета'
+                max_text_len: 20
+                on_text: root.set_login(self.text)
+                pos_hint: {"center_x": .30}
+        GridLayout:
+            cols:2
+            rows:1
+            padding:310,10,10,50
+
+            MyField
+                id: password
+                hint_text: 'Пароль'
+                max_text_len: 20
+                on_text: root.set_password(self.text)
+                pos_hint: {"center_x": .30}
+
+        GridLayout:
+            cols:2
+            rows:1
+            spacing:10
+            padding:300,20,0,0
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '      Войти       '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'reader_menu'
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '    Отмена    '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'choose_reader'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+
+<WindowRegistrationReader>:
+    name: 'reader_registration'
+    title: 'Регистрация'
+    size:root.width, root.height
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        orientation: "vertical"
+        adaptive_size: True
+
+        GridLayout:
+            cols:1
+            height:50
+            padding:30,160,10,0
+            Label:
+                text:"[color=000000]Добро пожаловать![/color]"
+                markup: True
+                font_size: 20
+        GridLayout:
+            cols:1
+            rows:1
+            padding:310,70,0,0
+        # имя пациента
+            MyField
+                id: login_reader
+                hint_text: 'Номер чит-го билета'
+                max_text_len: 20
+                on_text: root.set_login(self.text)
+                pos_hint: {"center_x": .30}
+
+            TooltipButton:
+                tooltip_text: 'Сгенерировать номер'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.generate_number()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'account-convert-outline.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+        GridLayout:
+            cols:1
+            rows:2
+            height:30
+            spacing:20
+            padding:310,0,0,0
+
+            MyField
+                hint_text: 'Пароль'
+                max_text_len: 20
+                on_text: root.set_password(self.text)
+
+            MyField
+                hint_text: 'Имя пользователя'
+                max_text_len: 20
+                on_text: root.set_password(self.text)
+
+
+
+        GridLayout:
+            cols:2
+            rows:1
+            spacing:20
+            padding:290,40,0,0
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Регистрация'
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'reader_menu'
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '      Отмена      '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'choose_reader'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+
+<WindowMenuReader>:
+    name: 'reader_menu'
+    title: 'Вход'
+    separator_color: (192/256,110/256,240/256,1)
+    background_color:'#a910e6'
+    size:root.width, root.height
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        orientation: "vertical"
+        adaptive_size: True
+
+        GridLayout:
+            cols:1
+            height:50
+            padding:30,90,10,0
+            Label:
+                text:"[color=000000]Дорогой читатель, куда бы \n       вы хотели перейти?[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+        GridLayout:
+            cols:1
+            rows:3
+            spacing:30
+            padding:335,0,0,0
+        # имя пациента
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Личный кабинет'
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'reader_personal_account'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '      Библиотека      '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'reader_library'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '           Выход            '
+                #disabled: True if root.every thing() else False
+                on_press: app.root.current = 'exit_reader'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+
+
+<WindowPersonalAccountReader>:
+    title: 'Профиль'
+    name: 'reader_personal_account'
+    auto_dismiss:False
+#    size:(350,450)
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        orientation: "vertical"
+        adaptive_size: True
+
+#        GridLayout:
+#            cols:1
+##            padding: 0,10,0,0
+#            Image:
+#                source:'world.png'
+#                size: "200000sp", "200000sp"
+#                os_hint: {"center_y": 0.2, "center_x": 0.5}
+        Label:
+            color: '070606'
+            text: 'Алеся №021972'
+            id:pet_name
+            markup: True
+            font_size: 20
+            height:20
+            width:30
+#
+
+        GridLayout:
+            cols: 2
+            GridLayout:
+                cols: 2
+                rows: 3
+                size_hint: .1, 0.2
+                spacing:10
+                padding:10,0,10,10
+
+                Label:
+                    color: '000000'
+                    text: 'Статус: '
+                    id:pet_name
+                    markup: True
+                    font_size: 15
+                    height:20
+                    width:30
+                Label:
+                    text:"[color=808080]PRO[/color]"
+                    markup: True
+                    font_size: 15
+
+                Label:
+                    color: '000000'
+                    text: 'Рейтинг: '
+                    id:pet_name
+                    markup: True
+                    font_size: 15
+
+                Label:
+                    text:"[color=808080]Хороший[/color]"
+                    markup: True
+                    font_size: 15
+
+                Label:
+                    color: '000000'
+                    text: 'Прочитано: '
+                    id:pet_name
+                    markup: True
+                    font_size: 15
+
+                Label:
+                    text:"[color=808080]130[/color]"
+                    markup: True
+                    font_size: 15
+
+        GridLayout:
+            cols:4
+            rows:1
+            padding:110,100,0,0
+            spacing:140
+            TooltipButton:
+                tooltip_text: 'Прочитанные'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: Factory.WindowFinishedBooksReader().open()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'checkbox-marked-circle-outline.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+            TooltipButton:
+                tooltip_text: 'Добавленные'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: Factory.WindowAddedBooksReader().open()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'clipboard-text-clock-outline.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+            TooltipButton:
+                tooltip_text: 'Любимые'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: Factory.WindowlikeedBooksReader().open()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'hand-heart.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+            TooltipButton:
+                tooltip_text: 'Уведомления'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: Factory.WindowNotificationsReader().open()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'bell-outline.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+        GridLayout:
+            cols:1
+            rows:3
+            spacing:30
+            padding:300,40,0,0
+        # имя пациента
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Вернуться в главное меню'
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'reader_menu'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+#
+
+<WindowFinishedBooksReader@Popup>:
+    title:'Прочитанные'
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:10,0,10,10
+            GridLayout:
+                cols: 1
+                spacing:10
+                padding:10,0,10,10
+
+                ThreeLineListItem:
+#                    bg_color: '#c06ef0'
+                    text: "[color=000000]Жизнь взаймы[/color]"
+                    secondary_text: "[color=000000]Эрих Мария Ремарк[/color]"
+                    markup: True
+                    tertiary_text: "1959"
+
+                ThreeLineListItem:
+                    text: "[color=000000]Алхимик[/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Пауло Коэльо[/color]"
+                    tertiary_text: "1988"
+
+                ThreeLineListItem:
+                    text: "[color=000000]Бабушка велела кланяться и передать, что просит прощения[/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Фредрик Бакман[/color]"
+                    tertiary_text: "2013"
+
+            GridLayout:
+                cols:1
+                rows:3
+                spacing:30
+                padding:320,100,0,0
+                MDFillRoundFlatButton:
+                    md_bg_color: 1, 1, 1,1
+                    text:'         Назад           '
+                    background_color:'#c06ef0'
+                    background_normal:''
+                    on_press: root.dismiss()
+                    text_color: 0, 0, 0, 1
+                    line_color: 1, 1, 1, 1
+#                on_release: app.root.current = 'records'
+
+
+<WindowAddedBooksReader@Popup>:
+    title:'Добавленные'
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:10,0,10,10
+            GridLayout:
+                cols: 1
+                spacing:10
+                padding:10,0,10,10
+
+                ThreeLineListItem:
+#                    bg_color: '#c06ef0'
+                    text: "[color=000000]Дом, в котором...[/color]"
+                    secondary_text: "[color=000000]Мариам Петросян[/color]"
+                    markup: True
+                    tertiary_text: "2009"
+
+
+                ThreeLineListItem:
+                    text: "[color=000000]Две недели в другом городе[/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Ирвин Шоу[/color]"
+                    tertiary_text: "1960"
+
+                ThreeLineListItem:
+                    text: "[color=000000]Вторая жизнь Уве[/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Фредрик Бакман[/color]"
+                    tertiary_text: "2012"
+
+            GridLayout:
+                cols:1
+                rows:3
+                spacing:30
+                padding:320,100,0,0
+                MDFillRoundFlatButton:
+                    md_bg_color: 1, 1, 1,1
+                    text:'         Назад           '
+                    background_color:'#c06ef0'
+                    background_normal:''
+                    on_press: root.dismiss()
+                    text_color: 0, 0, 0, 1
+                    line_color: 1, 1, 1, 1
+#                on_release: app.root.current = 'records'
+
+<WindowlikeedBooksReader@Popup>:
+    title:'Любимые'
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:10,0,10,10
+            GridLayout:
+                cols: 1
+                spacing:10
+                padding:10,0,10,10
+
+                ThreeLineListItem:
+#                    bg_color: '#c06ef0'
+                    text: "[color=000000]Граф Монте-Кристо[/color]"
+                    secondary_text: "[color=000000]Александр Дюма[/color]"
+                    markup: True
+                    tertiary_text: "1844"
+
+
+                ThreeLineListItem:
+                    text: "[color=000000]Алхимик[/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Пауло Коэльо[/color]"
+                    tertiary_text: "1988"
+
+                ThreeLineListItem:
+                    text: "[color=000000]Ставок больше нет[/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Жан Поль Сартр[/color]"
+                    tertiary_text: "1947"
+
+            GridLayout:
+                cols:1
+                rows:3
+                spacing:30
+                padding:320,100,0,0
+                MDFillRoundFlatButton:
+                    md_bg_color: 1, 1, 1,1
+                    text:'         Назад           '
+                    background_color:'#c06ef0'
+                    background_normal:''
+                    on_press: root.dismiss()
+                    text_color: 0, 0, 0, 1
+                    line_color: 1, 1, 1, 1
+#                on_release: app.root.current = 'records'
+
+<WindowNotificationsReader>:
+    title:'Уведомления'
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:10,0,10,10
+            GridLayout:
+                cols: 1
+                spacing:10
+                padding:10,0,10,10
+
+                ThreeLineListItem:
+#                    bg_color: '#c06ef0'
+                    text: "[color=000000]С Днем Библиотекаря![/color]"
+                    secondary_text: "[color=000000]Мы рады, что вы с нами:)[/color]"
+                    markup: True
+                    tertiary_text: "-- Ваша библиотека"
+
+
+                ThreeLineListItem:
+                    text: "[color=000000]Ваш рейтинг достиг нового уровня![/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Спешим поздравить вас с новым достижением!\nСпасибо, что вы с нами![/color]"
+                    tertiary_text: "-- Ваша библиотека"
+
+                ThreeLineListItem:
+                    text: "[color=000000]18:00 - 20:55[/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Психолог[/color]"
+                    tertiary_text: "-- Ваша библиотека"
+
+            GridLayout:
+                cols:1
+                rows:3
+                spacing:30
+                padding:320,100,0,0
+                MDFillRoundFlatButton:
+                    md_bg_color: 1, 1, 1,1
+                    text:'         Назад           '
+                    background_color:'#c06ef0'
+                    background_normal:''
+                    on_press: root.dismiss()
+                    text_color: 0, 0, 0, 1
+                    line_color: 1, 1, 1, 1
+#                on_release: app.root.current = 'records'
+
+<WindowLibraryReader>:
+    name: "reader_library"
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols: 5
+            rows:1
+            size_hint: 1, 0.3
+            spacing:20
+            padding:0,0,10,10
+            Label:
+                text:"[color=808080]Книги:[/color]"
+                markup: True
+                font_size: 15
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=00000]Библиотека[/color]"
+                markup: True
+                font_size: 20
+
+            MyField
+                hint_text: 'Поиск'
+                max_text_len: 20
+                on_text: root.set_password(self.text)
+                pos_hint: {"center_x": .30}
+
+            TooltipButton:
+                tooltip_text: 'Поиск'
+                size_hint:None,None
+                size: "20sp", "30sp"
+                on_press: root.search()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'checkbox-marked.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+        GridLayout:
+            cols: 1
+            spacing:10
+            padding:10,0,10,10
+
+            ThreeLineAvatarListItem:
+#                    bg_color: '#c06ef0'
+                text: "[color=000000]Жизнь взаймы[/color]"
+                secondary_text: "[color=000000]Эрих Мария Ремарк[/color]"
+                markup: True
+                tertiary_text: "1959"
+                ImageLeftWidget:
+                    source: "remark.png"
+                    on_press: Factory.WindowBookReader().open()
+
+
+            ThreeLineAvatarListItem:
+                text: "[color=000000]Алхимик[/color]"
+                markup: True
+                secondary_text: "[color=000000]Пауло Коэльо[/color]"
+                tertiary_text: "1988"
+                ImageLeftWidget:
+                    source: "alhimik.png"
+                    on_press: Factory.WindowBookReader().open()
+
+            ThreeLineAvatarListItem:
+                text: "[color=000000]Чистая архитектура. Искусство разработки программного обеспечения[/color]"
+                markup: True
+                secondary_text: "[color=000000]Роберт Мартин[/color]"
+                tertiary_text: "2018"
+                ImageLeftWidget:
+                    source: "martin.png"
+                    on_press: Factory.WindowBookReader().open()
+
+            GridLayout:
+                cols:1
+                rows:3
+                spacing:30
+                padding:300,100,0,0
+                MDFillRoundFlatButton:
+                    md_bg_color: 1, 1, 1,1
+                    text:'Вернуться в главное меню'
+                    background_color:'#c06ef0'
+                    background_normal:''
+                    on_press: app.root.current = 'reader_menu'
+                    text_color: 0, 0, 0, 1
+                    line_color: 1, 1, 1, 1
+#                on_release: app.root.current = 'records'
+
+
+<WindowBookReader@Popup>:
+    title: 'Описание:'
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+        GridLayout:
+            cols: 2
+            size_hint: 1, 0.3
+            spacing:40
+            padding:10,40,10,10
+            Label:
+                text:"[color=000000]Картинка:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Название:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Год:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь год[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Редкость книги:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                id: book_number
+                text:"[color=000000]Номер книги[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Автор книги:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Описание:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Время:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+        GridLayout:
+            cols: 3
+            size_hint: 1, 0.3
+            spacing:90
+            padding:240,180,10,10
+            TooltipButton:
+                tooltip_text: 'Назад'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.dismiss()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'chevron-left-circle.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+            TooltipButton:
+                tooltip_text: 'Читать'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.addBook(root.ids.book_number.text)
+                background_color:0,0,0,0
+
+                Image:
+                    source:'book-plus.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+            TooltipButton:
+                tooltip_text: 'Добавить в любимые'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.addIntoLikedBooks(root.ids.book_number.text)
+                background_color:0,0,0,0
+
+                Image:
+                    source:'emoticon-kiss.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+<WindowExitReader>:
+    name: "exit_reader"
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols:1
+            height:50
+            padding:15,140,10,0
+            Label:
+                text:"[color=000000]Хотите выйти?[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+        GridLayout:
+            cols:2
+            spacing:20
+            height:70
+            padding:290,0,10,0
+            MDRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '         Да         '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'choose_role'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '         Нет         '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'reader_menu'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+
+# /////////////////////////////////////////////////////////////////////////////
+
+
+<WindowWelcomeWorker>:
+    name: 'choose_worker'
+    title: 'Вход'
+    separator_color: (192/256,110/256,240/256,1)
+    background_color:'#a910e6'
+    size:root.width, root.height
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation: "vertical"
+        adaptive_size: True
+
+        GridLayout:
+            cols:1
+            height:50
+            padding:15,140,10,0
+            Label:
+                text:"[color=000000]Вы хотите?[/color]"
+                markup: True
+                font_size: 20
+                height:30
+                width:30
+        GridLayout:
+            cols:1
+            rows:2
+            spacing:20
+            height:70
+            padding:320,0,10,0
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text:'                Войти                 '
+                #disabled: True if root.everything() else False
+                on_press:
+#                    app.root.transition.direction = 'no_transition'
+                    app.root.current = 'worker_enter'
+#                on_release: root.dismiss()
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '  Зарегистрироваться'
+                #disabled: True if root.everything() else False
+                on_press:
+#                    app.root.transition.direction = 'no_transition'
+                    app.root.current = 'worker_registration'
+#                on_release: root.dismiss()
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+<WindowEnterWorker>:
+    name: 'worker_enter'
+    title: 'Вход'
+    separator_color: (192/256,110/256,240/256,1)
+    background_color:'#a910e6'
+    size:root.width, root.height
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation: "vertical"
+        adaptive_size: True
+
+        GridLayout:
+            cols:1
+            height:50
+            padding:30,140,10,0
+            Label:
+                text:"[color=000000]Добро пожаловать![/color]"
+                markup: True
+                font_size: 20
+
+        GridLayout:
+            cols:1
+            rows:1
+            height:30
+            padding:310,40,0,0
+        # имя пациента
+            MyField
+                id: login_reader
+                hint_text: 'Номер пропуска'
+                max_text_len: 20
+                on_text: root.set_login(self.text)
+                pos_hint: {"center_x": .30}
+        GridLayout:
+            cols:2
+            rows:1
+            padding:310,10,10,50
+
+            MyField
+                id: password
+                hint_text: 'Пароль'
+                max_text_len: 20
+                on_text: root.set_password(self.text)
+                pos_hint: {"center_x": .30}
+
+        GridLayout:
+            cols:1
+            rows:2
+            spacing:20
+            height:70
+            padding:320,0,10,0
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '                Войти                 '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_menu'
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '              Отмена                 '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'choose_worker'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+<WindowRegistrationWorker>:
+    name: 'worker_registration'
+    title: 'Вход'
+    separator_color: (192/256,110/256,240/256,1)
+    background_color:'#a910e6'
+    size:root.width, root.height
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+        orientation: "vertical"
+        adaptive_size: True
+
+        GridLayout:
+            cols:1
+            height:50
+            padding:30,160,10,0
+            Label:
+                text:"[color=000000]Добро пожаловать![/color]"
+                markup: True
+                font_size: 20
+        GridLayout:
+            cols:1
+            rows:1
+            padding:310,70,0,0
+        # имя пациента
+            MyField
+                id: login_reader
+                hint_text: 'Номер пропуска'
+                max_text_len: 20
+                on_text: root.set_login(self.text)
+                pos_hint: {"center_x": .30}
+
+            TooltipButton:
+                tooltip_text: 'Сгенерировать номер'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.generate_number()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'account-convert-outline.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+        GridLayout:
+            cols:1
+            rows:2
+            height:30
+            spacing:20
+            padding:310,0,0,0
+
+            MyField
+                id: password
+                hint_text: 'Пароль'
+                max_text_len: 20
+                on_text: root.set_password(self.text)
+                pos_hint: {"center_x": .30}
+
+            MyField
+                hint_text: 'Имя работника'
+                max_text_len: 20
+                on_text: root.set_password(self.text)
+                pos_hint: {"center_x": .30}
+
+        GridLayout:
+            cols:2
+            rows:1
+            spacing:20
+            height:70
+            padding:280,30,10,0
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Регистрация'
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_menu'
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '      Отмена     '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'choose_worker'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+<WindowMenuWorker>:
+    name: 'worker_menu'
+    title: 'Вход'
+    separator_color: (192/256,110/256,240/256,1)
+    background_color:'#a910e6'
+    size:root.width, root.height
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+        orientation: "vertical"
+        adaptive_size: True
+
+        GridLayout:
+            cols:1
+#            height:50
+            padding:30,80,10,0
+            Label:
+                text:"[color=000000]Здравствуйте, куда бы \n  вы хотели перейти?[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+
+        GridLayout:
+            cols:1
+            rows:4
+            spacing:30
+            padding:335,0,0,0
+        # имя пациента
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Личный кабинет'
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_personal_account'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Выдача пособий'
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_issuance'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '    Сбор пособий    '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_collecting'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '           Выход            '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'exit_worker'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+<WindowPersonalAccountWorker>:
+    title: 'Профиль'
+    name: 'worker_personal_account'
+    auto_dismiss:False
+    separator_color: (192/256,110/256,240/256,1)
+    background_color:'#a910e6'
+    size:(350,450)
+
+    BoxLayout:
+        # background color
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+        orientation: "vertical"
+        adaptive_size: True
+
+        Label:
+            color: '000000'
+            text: 'Валерия №0213672'
+            id:pet_name
+            markup: True
+            font_size: 20
+            height:20
+            width:30
+#
+
+        GridLayout:
+            cols: 2
+            GridLayout:
+                cols: 2
+                rows: 3
+                size_hint: .1, 0.2
+                spacing:10
+                padding:10,0,10,10
+
+                Label:
+                    color: '000000'
+                    text: 'Рейтинг: '
+                    id:pet_name
+                    markup: True
+                    font_size: 15
+                    height:20
+                    width:30
+
+                Label:
+                    text:"[color=808080]Хороший[/color]"
+                    markup: True
+                    font_size: 15
+                    height:20
+                    width:30
+
+        GridLayout:
+            cols:4
+            rows:1
+            padding:380,60,0,0
+            spacing:10
+            TooltipButton:
+                tooltip_text: 'Уведомления'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: Factory.WindowNotificationsWorker().open()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'bell-outline.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+
+        GridLayout:
+            cols:1
+            rows:4
+            spacing:30
+            padding:300,0,0,0
+        # имя пациента
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: 'Вернуться в главное меню'
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_menu'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+<WindowNotificationsWorker>:
+    title:'Уведомления'
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:10,0,10,10
+            GridLayout:
+                cols: 1
+                spacing:10
+                padding:10,0,10,10
+
+
+                ThreeLineListItem:
+#                    bg_color: '#c06ef0'
+                    text: "[color=000000]С Днем Библиотекаря![/color]"
+                    secondary_text: "[color=000000]Мы рады, что вы с нами:)[/color]"
+                    markup: True
+                    tertiary_text: "-- Ваша библиотека"
+
+
+                ThreeLineListItem:
+                    text: "[color=000000]Ваш рейтинг достиг нового уровня![/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Спешим поздравить вас с новым достижением!\nСпасибо, что вы с нами![/color]"
+                    tertiary_text: "-- Ваша библиотека"
+
+                ThreeLineListItem:
+                    text: "[color=000000]Добро пожаловать![/color]"
+                    markup: True
+                    secondary_text: "[color=000000]Мы рады приветствовать вас в нашей семье:)[/color]"
+                    tertiary_text: "-- Ваша библиотека"
+
+            GridLayout:
+                cols:1
+                rows:3
+                spacing:30
+                padding:320,100,0,0
+                MDFillRoundFlatButton:
+                    md_bg_color: 1, 1, 1,1
+                    text:'         Назад           '
+                    background_color:'#c06ef0'
+                    background_normal:''
+                    on_press: root.dismiss()
+                    text_color: 0, 0, 0, 1
+                    line_color: 1, 1, 1, 1
+#                on_release: app.root.current = 'records'
+
+<WindowIssuanceOfBooksWorker>:
+    name: "worker_issuance"
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:30,0,10,10
+
+            Label:
+                text:"[color=000000]Список заявок\nна взятие книг[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:3
+
+
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:10,0,10,10
+            GridLayout:
+                cols: 1
+                spacing:10
+                padding:10,0,10,10
+
+
+            ThreeLineAvatarListItem:
+#                    bg_color: '#c06ef0'
+                text: "[color=000000]Жизнь взаймы[/color]"
+                secondary_text: "[color=000000]Эрих Мария Ремарк[/color]"
+                markup: True
+                tertiary_text: "1959"
+                ImageLeftWidget:
+                    source: "check-outline.png"
+                    on_press: Factory.WindowRequestForTakingBookWorker().open()
+
+
+            ThreeLineAvatarListItem:
+                text: "[color=000000]Алхимик[/color]"
+                markup: True
+                secondary_text: "[color=000000]Пауло Коэльо[/color]"
+                tertiary_text: "1988"
+                ImageLeftWidget:
+                    source: "check-outline.png"
+                    on_press: Factory.WindowRequestForTakingBookWorker().open()
+
+            ThreeLineAvatarListItem:
+                text: "[color=000000]18:00 - 20:55[/color]"
+                markup: True
+                secondary_text: "[color=000000]Психолог[/color]"
+                tertiary_text: "Божественный класс. Кто он и как с ним бороться???"
+                ImageLeftWidget:
+                    source: "check-outline.png"
+                    on_press: Factory.WindowRequestForTakingBookWorker().open()
+
+        GridLayout:
+            cols:1
+            rows:3
+            spacing:30
+            padding:340,250,0,0
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text:'         Назад           '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_menu'
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+<WindowRequestForTakingBookWorker@Popup>:
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+        GridLayout:
+            cols: 2
+            size_hint: 1, 0.3
+            spacing:40
+            padding:10,40,10,10
+            Label:
+                text:"[color=000000] Номер читательского:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Название:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Год:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь год[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Редкость книги:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                id: book_number
+                text:"[color=000000]Номер книги[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Автор книги:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Кол-во экземпляров:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+
+        GridLayout:
+            cols: 3
+            size_hint: 1, 0.3
+            spacing:90
+            padding:230,180,10,10
+            TooltipButton:
+                tooltip_text: 'Назад'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.dismiss()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'chevron-left-circle.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+            TooltipButton:
+                tooltip_text: 'Выдать книгу'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.giveBook()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'book-clock.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+            TooltipButton:
+                tooltip_text: 'Отказать'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.delay()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'cancel.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+
+
+
+
+<WindowCollectingOfBooksWorker>:
+    name: "worker_collecting"
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:30,0,10,10
+
+            Label:
+                text:"[color=000000]Список заявок\nна взятие книг[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:3
+
+        GridLayout:
+            cols: 1
+            size_hint: 1, 0.3
+            spacing:10
+            padding:10,0,10,10
+            GridLayout:
+                cols: 1
+                spacing:10
+                padding:10,0,10,10
+
+            ThreeLineAvatarListItem:
+#                    bg_color: '#c06ef0'
+                text: "[color=000000]Жизнь взаймы[/color]"
+                secondary_text: "[color=000000]Эрих Мария Ремарк[/color]"
+                markup: True
+                tertiary_text: "1959"
+                ImageLeftWidget:
+                    source: "remark.png"
+                    on_press: Factory.WindowRequestForReturnBookWorker().open()
+
+
+            ThreeLineAvatarListItem:
+                text: "[color=000000]Алхимик[/color]"
+                markup: True
+                secondary_text: "[color=000000]Пауло Коэльо[/color]"
+                tertiary_text: "1988"
+                ImageLeftWidget:
+                    source: "alhimik.png"
+                    on_press: Factory.WindowRequestForReturnBookWorker().open()
+
+            ThreeLineAvatarListItem:
+                text: "[color=000000]18:00 - 20:55[/color]"
+                markup: True
+                secondary_text: "[color=000000]Психолог[/color]"
+                tertiary_text: "Божественный класс. Кто он и как с ним бороться???"
+                ImageLeftWidget:
+                    source: "check-outline.png"
+                    on_press: Factory.WindowRequestForReturnBookWorker().open()
+
+        GridLayout:
+            cols:1
+            rows:3
+            spacing:30
+            padding:340,250,0,0
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text:'         Назад           '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_menu'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+
+
+
+
+
+
+<WindowRequestForReturnBookWorker@Popup>:
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (238/256,230/256,203/256,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+        GridLayout:
+            cols: 2
+            size_hint: 1, 0.3
+            spacing:40
+            padding:10,40,10,10
+
+            Label:
+                id: book_number
+                text:"[color=000000]Номер книги[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Автор книги:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+            Label:
+                text:"[color=000000]Кол-во экземпляров:[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+            Label:
+                text:"[color=000000]Здесь[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+
+
+        GridLayout:
+            cols: 3
+            size_hint: 1, 0.3
+            spacing:90
+            padding:380,180,10,10
+            TooltipButton:
+                tooltip_text: 'Назад'
+                size_hint:None,None
+                size: "40sp", "40sp"
+                on_press: root.dismiss()
+                background_color:0,0,0,0
+
+                Image:
+                    source:'chevron-left-circle.png'
+                    center_x:self.parent.center_x
+                    center_y:self.parent.center_y
+                    size:"40sp","40sp"
+
+
+
+<WindowExitWorker>:
+    name: "exit_worker"
+    BoxLayout:
+        orientation: "vertical"
+        adaptive_size: True
+        canvas.before:
+            Color:
+                rgb: (1,1,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+#        size: 500, 400
+#
+        GridLayout:
+            cols:1
+            height:50
+            padding:15,140,10,0
+            Label:
+                text:"[color=000000]Хотите выйти?[/color]"
+                markup: True
+                font_size: 20
+#                size_hint_y:None
+                height:30
+                width:30
+        GridLayout:
+            cols:2
+            spacing:20
+            height:70
+            padding:290,0,10,0
+            MDRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '         Да         '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'choose_role'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+            MDFillRoundFlatButton:
+                md_bg_color: 1, 1, 1,1
+                text: '         Нет         '
+                #disabled: True if root.everything() else False
+                on_press: app.root.current = 'worker_menu'
+
+                #on_press: root.info()
+                text_color: 0, 0, 0, 1
+                line_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5,"center_y":.5}
+
+
+
+<MyField@MDTextField>
+    size_hint_x: None
+    width: '200'
+    text_color: "000000"
+    mode: "rectangle"
+
+    required: True
+    helper_text: "This field is required"
+    helper_text_mode: "on_error"
+
+    color_mode: 'custom'
+    line_color_focus: '000000'
+
+    multiline: False
+    background_color: (1, 1, 1)
+    background_normal:''
+
+<TooltipButton@MDToolTip+Button>
+    tooltip_bg_color: [155/256,136/256,75/256,1]
